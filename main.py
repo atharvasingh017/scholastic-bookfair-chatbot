@@ -1,31 +1,56 @@
-
-from flask import Flask, request, jsonify
+import streamlit as st
 import os
-from openai import OpenAI
+import requests
 
-app = Flask(__name__)
+st.set_page_config(page_title="📚 Book Fair Chatbot", layout="centered")
+st.title("📚 Book Fair Chatbot")
+st.write("Ask me anything about the event, books, schedule, or payments!")
 
-def load_context():
-    with open('bookfair.txt', 'r') as f:
-        return f.read()
+# Load event info
+with open("bookfair.txt", "r", encoding="utf-8") as f:
+    book_data = f.read()
 
-@app.route('/chat', methods=['POST'])
-def chat():
-    data = request.json
-    user_message = data.get('message', '')
-    context = load_context()
-    
-    client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
-    
-    response = client.chat.completions.create(
-        model="gpt-3.5-turbo",
-        messages=[
-            {"role": "system", "content": f"You are a helpful bookfair assistant. Here's the context: {context}"},
-            {"role": "user", "content": user_message}
-        ]
-    )
-    
-    return jsonify({"response": response.choices[0].message.content})
+# OpenRouter API (Free access to open-source models)
+OPENROUTER_API_KEY = st.secrets["OPENROUTER_API_KEY"]  # stored securely
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+
+def ask_bot(question):
+    prompt = f"""
+You are a friendly assistant at a school Book Fair. Based on the following information, answer the user's question clearly and politely.
+
+Book Fair Info:
+{book_data}
+
+User: {question}
+Assistant:
+"""
+
+    headers = {
+        "Authorization": f"Bearer {OPENROUTER_API_KEY}",
+        "Content-Type": "application/json"
+    }
+
+    payload = {
+        "model": "mistralai/mistral-7b-instruct",  # free model on OpenRouter
+        "messages": [{
+            "role": "user",
+            "content": prompt
+        }]
+    }
+
+    response = requests.post("https://openrouter.ai/api/v1/chat/completions",
+                             json=payload,
+                             headers=headers)
+
+    if response.status_code == 200:
+        return response.json()['choices'][0]['message']['content']
+    else:
+        return "Sorry, something went wrong. 😢"
+
+
+# Chat UI
+user_input = st.text_input("Ask your question:")
+if user_input:
+    with st.spinner("Thinking..."):
+        answer = ask_bot(user_input)
+        st.success(answer)
