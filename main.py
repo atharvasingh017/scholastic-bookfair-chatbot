@@ -5,7 +5,7 @@ import requests
 
 # Configure Streamlit page settings
 st.set_page_config(
-    page_title="📚 Book Fair Chatbot",
+    page_title="📚 SCHOLASTIC FAIR Agent",
     layout="wide",
     initial_sidebar_state="collapsed",
     menu_items={
@@ -93,7 +93,7 @@ if "messages" not in st.session_state:
     st.session_state.messages = []
 
 # Display chat history
-st.title("📚 Book Fair Chatbot")
+st.title("📚 SCHOLASTIC FAIR Agent")
 chat_container = st.container()
 with chat_container:
     for message in st.session_state.messages:
