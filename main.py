@@ -105,11 +105,13 @@ with chat_container:
 
 # Chat input at bottom
 with st.container():
-    user_input = st.text_input("Ask me anything about the Book Fair!", key="user_input")
-
-    if user_input:
-        st.session_state.messages.append(("user", user_input))
-        with st.spinner("Thinking..."):
-            bot_response = ask_bot(user_input)
-            st.session_state.messages.append(("bot", bot_response))
-        st.rerun()
+    with st.form(key="chat_form", clear_on_submit=True):
+        user_input = st.text_input("Ask me anything about the Book Fair!", key="user_input")
+        submit_button = st.form_submit_button("Send")
+        
+        if submit_button and user_input:
+            st.session_state.messages.append(("user", user_input))
+            with st.spinner("Thinking..."):
+                bot_response = ask_bot(user_input)
+                st.session_state.messages.append(("bot", bot_response))
+            st.rerun()
