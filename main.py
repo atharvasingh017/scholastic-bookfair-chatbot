@@ -112,4 +112,4 @@ with st.container():
         with st.spinner("Thinking..."):
             bot_response = ask_bot(user_input)
             st.session_state.messages.append(("bot", bot_response))
-        st.experimental_rerun()
+        st.rerun()
