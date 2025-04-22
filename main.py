@@ -1,3 +1,4 @@
+
 import streamlit as st
 import os
 import requests
@@ -12,7 +13,6 @@ with open("bookfair.txt", "r", encoding="utf-8") as f:
 
 # OpenRouter API (Free access to open-source models)
 OPENROUTER_API_KEY = os.environ["OPENROUTER_API_KEY"]  # stored securely
-
 
 def ask_bot(question):
     prompt = f"""
@@ -47,10 +47,25 @@ Assistant:
     else:
         return "Sorry, something went wrong. 😢"
 
+# Initialize chat history
+if "messages" not in st.session_state:
+    st.session_state.messages = []
 
 # Chat UI
-user_input = st.text_input("Ask your question:")
+user_input = st.text_input("You:", key="user_input")
+
 if user_input:
-    with st.spinner("Thinking..."):
-        answer = ask_bot(user_input)
-        st.success(answer)
+    # Add user message
+    st.session_state.messages.append(("You", user_input))
+    
+    # Get bot response
+    with st.spinner("Bot is thinking..."):
+        bot_response = ask_bot(user_input)
+        st.session_state.messages.append(("Bot", bot_response))
+
+# Display chat history
+for role, message in st.session_state.messages:
+    if role == "You":
+        st.markdown(f"**You:** {message}")
+    else:
+        st.markdown(f"**Bot:** {message}")
