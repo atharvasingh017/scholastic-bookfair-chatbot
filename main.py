@@ -7,7 +7,12 @@ import requests
 st.set_page_config(
     page_title="📚 Book Fair Chatbot",
     layout="wide",
-    initial_sidebar_state="collapsed"
+    initial_sidebar_state="collapsed",
+    menu_items={
+        'Get Help': None,
+        'Report a bug': None,
+        'About': None
+    }
 )
 
 # Custom CSS for chat interface
@@ -31,10 +36,12 @@ st.markdown("""
 }
 .stTextInput {
     position: fixed;
-    bottom: 3rem;
+    bottom: 0;
+    left: 0;
     padding: 20px;
     background-color: #0e1117;
     width: 100%;
+    z-index: 999;
 }
 </style>
 """, unsafe_allow_html=True)
