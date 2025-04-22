@@ -11,7 +11,7 @@ with open("bookfair.txt", "r", encoding="utf-8") as f:
     book_data = f.read()
 
 # OpenRouter API (Free access to open-source models)
-OPENROUTER_API_KEY = st.secrets["OPENROUTER_API_KEY"]  # stored securely
+OPENROUTER_API_KEY = os.environ["OPENROUTER_API_KEY"]  # stored securely
 
 
 def ask_bot(question):
