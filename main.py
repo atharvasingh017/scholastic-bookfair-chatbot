@@ -25,6 +25,9 @@ st.markdown("""
     margin: 5px 0;
     text-align: right;
     margin-left: 20%;
+    display: inline-block;
+    float: right;
+    clear: both;
 }
 .bot-message {
     padding: 10px;
@@ -33,15 +36,42 @@ st.markdown("""
     margin: 5px 0;
     text-align: left;
     margin-right: 20%;
+    display: inline-block;
+    float: left;
+    clear: both;
 }
-.stTextInput {
+.chat-input {
     position: fixed;
     bottom: 0;
     left: 0;
+    right: 0;
     padding: 20px;
     background-color: #0e1117;
-    width: 100%;
     z-index: 999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+.creator-info {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    color: #666;
+    font-size: 12px;
+    z-index: 998;
+}
+div.stButton > button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+}
+.stTextInput > div > div > input {
+    border-radius: 20px;
+    width: auto;
+    min-width: 200px;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -103,11 +133,17 @@ with chat_container:
         else:
             st.markdown(f'<div class="bot-message">{content}</div>', unsafe_allow_html=True)
 
+# Creator info
+st.markdown('<div class="creator-info">Created by Atharva Singh</div>', unsafe_allow_html=True)
+
 # Chat input at bottom
 with st.container():
     with st.form(key="chat_form", clear_on_submit=True):
-        user_input = st.text_input("Ask me anything about the Book Fair!", key="user_input")
-        submit_button = st.form_submit_button("Send")
+        col1, col2 = st.columns([4,1])
+        with col1:
+            user_input = st.text_input("Ask me anything about the Book Fair!", key="user_input")
+        with col2:
+            submit_button = st.form_submit_button("Send")
         
         if submit_button and user_input:
             st.session_state.messages.append(("user", user_input))
