@@ -1,19 +1,16 @@
-
 import streamlit as st
 import os
 import requests
 
 # Configure Streamlit page settings
-st.set_page_config(
-    page_title="📚 SCHOLASTIC FAIR Agent",
-    layout="wide",
-    initial_sidebar_state="collapsed",
-    menu_items={
-        'Get Help': None,
-        'Report a bug': None,
-        'About': None
-    }
-)
+st.set_page_config(page_title="📚 SCHOLASTIC FAIR Agent",
+                   layout="wide",
+                   initial_sidebar_state="collapsed",
+                   menu_items={
+                       'Get Help': None,
+                       'Report a bug': None,
+                       'About': None
+                   })
 
 # Custom CSS for chat interface
 st.markdown("""
@@ -74,7 +71,8 @@ div.stButton > button {
     min-width: 200px;
 }
 </style>
-""", unsafe_allow_html=True)
+""",
+            unsafe_allow_html=True)
 
 # Load event info
 with open("bookfair.txt", "r", encoding="utf-8") as f:
@@ -82,6 +80,7 @@ with open("bookfair.txt", "r", encoding="utf-8") as f:
 
 # OpenRouter API setup
 OPENROUTER_API_KEY = os.environ["OPENROUTER_API_KEY"]
+
 
 def ask_bot(question):
     prompt = f"""
@@ -109,14 +108,14 @@ Assistant:
             "https://openrouter.ai/api/v1/chat/completions",
             json=payload,
             headers=headers,
-            timeout=30
-        )
+            timeout=30)
         if response.status_code == 200:
             return response.json()['choices'][0]['message']['content']
         else:
             return "Sorry, something went wrong. 😢"
     except Exception as e:
         return f"Error: {str(e)}"
+
 
 # Initialize chat history
 if "messages" not in st.session_state:
@@ -129,22 +128,26 @@ with chat_container:
     for message in st.session_state.messages:
         role, content = message
         if role == "user":
-            st.markdown(f'<div class="user-message">{content}</div>', unsafe_allow_html=True)
+            st.markdown(f'<div class="user-message">{content}</div>',
+                        unsafe_allow_html=True)
         else:
-            st.markdown(f'<div class="bot-message">{content}</div>', unsafe_allow_html=True)
+            st.markdown(f'<div class="bot-message">{content}</div>',
+                        unsafe_allow_html=True)
 
 # Creator info
-st.markdown('<div class="creator-info">Created by Atharva Singh</div>', unsafe_allow_html=True)
+st.markdown('<div class="creator-info">Created by Atharva Singh</div>',
+            unsafe_allow_html=True)
 
 # Chat input at bottom
 with st.container():
     with st.form(key="chat_form", clear_on_submit=True):
-        col1, col2 = st.columns([4,1])
+        col1, col2 = st.columns([4, 1])
         with col1:
-            user_input = st.text_input("Ask me anything about the Book Fair!", key="user_input")
+            user_input = st.text_input("Ask me anything about the Book Fair!",
+                                       key="user_input")
         with col2:
             submit_button = st.form_submit_button("Send")
-        
+
         if submit_button and user_input:
             st.session_state.messages.append(("user", user_input))
             with st.spinner("Thinking..."):
