@@ -12,30 +12,65 @@ st.set_page_config(page_title="📚 SCHOLASTIC FAIR Agent",
                        'About': None
                    })
 
+# Hide streamlit default elements
+st.markdown("""
+<style>
+    #root > div:nth-child(1) > div > div > div > div > section > div {padding-top: 0rem;}
+    header {visibility: hidden;}
+    .stDeployButton {display: none;}
+    [data-testid="stSidebar"] {display: none;}
+    [data-testid="collapsedControl"] {display: none;}
+    footer {display: none;}
+</style>
+""", unsafe_allow_html=True)
+
 # Custom CSS for chat interface
 st.markdown("""
 <style>
+.main-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #1a1a1a;
+    padding: 1rem;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #2f2f2f;
+}
+.main-header h1 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: white;
+}
+.book-icon {
+    margin-right: 10px;
+    font-size: 1.5rem;
+}
 .user-message {
-    padding: 10px;
+    padding: 15px;
     border-radius: 15px;
-    background-color: #2b313e;
-    margin: 5px 0;
+    background-color: #1e1e1e;
+    margin: 10px 0;
     text-align: right;
     margin-left: 20%;
     display: inline-block;
     float: right;
     clear: both;
+    border: 1px solid #2f2f2f;
 }
 .bot-message {
-    padding: 10px;
+    padding: 15px;
     border-radius: 15px;
-    background-color: #1f2937;
-    margin: 5px 0;
+    background-color: #1a1a1a;
+    margin: 10px 0;
     text-align: left;
     margin-right: 20%;
     display: inline-block;
     float: left;
     clear: both;
+    border: 1px solid #2f2f2f;
 }
 .chat-input {
     position: fixed;
@@ -121,8 +156,18 @@ Assistant:
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
+# Display header
+st.markdown("""
+<div class="main-header">
+    <span class="book-icon">📚</span>
+    <h1>SCHOLASTIC FAIR Agent</h1>
+</div>
+""", unsafe_allow_html=True)
+
+# Add spacing for header
+st.markdown("<div style='height: 80px;'></div>", unsafe_allow_html=True)
+
 # Display chat history
-st.title("📚 SCHOLASTIC FAIR Agent")
 chat_container = st.container()
 with chat_container:
     for message in st.session_state.messages:
@@ -141,10 +186,11 @@ st.markdown('<div class="creator-info">Created by Atharva Singh</div>',
 # Chat input at bottom
 with st.container():
     with st.form(key="chat_form", clear_on_submit=True):
-        col1, col2 = st.columns([4, 1])
+        col1, col2 = st.columns([6, 1])
         with col1:
-            user_input = st.text_input("Ask me anything about the Book Fair!",
-                                       key="user_input")
+            user_input = st.text_input("What can I help with?",
+                                       key="user_input",
+                                       placeholder="Ask anything about the Book Fair...")
         with col2:
             submit_button = st.form_submit_button("Send")
 
