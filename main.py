@@ -85,18 +85,30 @@ st.markdown("""
     padding: 20px;
     background-color: #0e1117;
     z-index: 999;
-    display: flex;
-    align-items: center;
-    gap: 10px;
     border-top: 1px solid #2f2f2f;
 }
 .creator-info {
     position: fixed;
-    bottom: 80px;
+    bottom: 100px;
     right: 20px;
     color: #666;
     font-size: 12px;
     z-index: 998;
+}
+div[data-testid="stForm"] {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+}
+.user-message {
+    animation: fadeIn 0.3s ease;
+}
+.bot-message {
+    animation: fadeIn 0.3s ease;
+}
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
 }
 div.stButton > button {
     background-color: #4CAF50;
