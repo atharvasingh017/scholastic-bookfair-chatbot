@@ -103,9 +103,10 @@ div.stButton > button {
     color: white;
     border: none;
     border-radius: 8px;
-    padding: 12px 24px;
+    padding: 8px 20px;
     height: 41px;
     margin-top: 0;
+    width: 100%;
 }
 .stTextInput > div > div > input {
     border-radius: 8px;
@@ -211,14 +212,14 @@ st.markdown("<div style='margin-bottom: 100px;'></div>", unsafe_allow_html=True)
 # Chat input at bottom
 with st.container():
     with st.form(key="chat_form", clear_on_submit=True):
-        cols = st.columns([12, 1])
-        with cols[0]:
+        col1, col2 = st.columns([6, 1])
+        with col1:
             user_input = st.text_input(
                 "",
                 key="user_input",
                 placeholder="Ask anything about the Book Fair...",
                 label_visibility="collapsed")
-        with cols[1]:
+        with col2:
             submit_button = st.form_submit_button("Send")
 
         if submit_button and user_input:
