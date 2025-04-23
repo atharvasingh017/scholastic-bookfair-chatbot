@@ -22,7 +22,8 @@ st.markdown("""
     [data-testid="collapsedControl"] {display: none;}
     footer {display: none;}
 </style>
-""", unsafe_allow_html=True)
+""",
+            unsafe_allow_html=True)
 
 # Custom CSS for chat interface
 st.markdown("""
@@ -162,7 +163,8 @@ st.markdown("""
     <span class="book-icon">📚</span>
     <h1>SCHOLASTIC FAIR Agent</h1>
 </div>
-""", unsafe_allow_html=True)
+""",
+            unsafe_allow_html=True)
 
 # Add spacing for header
 st.markdown("<div style='height: 80px;'></div>", unsafe_allow_html=True)
@@ -186,11 +188,12 @@ st.markdown('<div class="creator-info">Created by Atharva Singh</div>',
 # Chat input at bottom
 with st.container():
     with st.form(key="chat_form", clear_on_submit=True):
-        col1, col2 = st.columns([6, 1])
+        col1, col2 = st.columns([9, 1])
         with col1:
-            user_input = st.text_input("What can I help with?",
-                                       key="user_input",
-                                       placeholder="Ask anything about the Book Fair...")
+            user_input = st.text_input(
+                "What can I help with?",
+                key="user_input",
+                placeholder="Ask anything about the Book Fair...")
         with col2:
             submit_button = st.form_submit_button("Send")
 
