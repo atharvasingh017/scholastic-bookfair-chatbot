@@ -89,11 +89,14 @@ st.markdown("""
 }
 .creator-info {
     position: fixed;
-    bottom: 100px;
+    bottom: 0;
     right: 20px;
     color: #666;
     font-size: 12px;
-    z-index: 998;
+    z-index: 999;
+    background-color: #0e1117;
+    padding: 5px 10px;
+    margin-bottom: 70px;
 }
 div[data-testid="stForm"] {
     margin: 0 !important;
