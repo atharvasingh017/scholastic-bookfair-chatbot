@@ -54,12 +54,14 @@ st.markdown("""
     border-radius: 15px;
     background-color: #1e1e1e;
     margin: 10px 0;
-    text-align: right;
+    text-align: left;
     margin-left: 20%;
-    display: inline-block;
+    display: block;
     float: right;
     clear: both;
     border: 1px solid #2f2f2f;
+    max-width: 80%;
+    word-wrap: break-word;
 }
 .bot-message {
     padding: 15px;
@@ -68,10 +70,12 @@ st.markdown("""
     margin: 10px 0;
     text-align: left;
     margin-right: 20%;
-    display: inline-block;
+    display: block;
     float: left;
     clear: both;
     border: 1px solid #2f2f2f;
+    max-width: 80%;
+    word-wrap: break-word;
 }
 .chat-input {
     position: fixed;
@@ -82,9 +86,9 @@ st.markdown("""
     background-color: #0e1117;
     z-index: 999;
     display: flex;
-    justify-content: center;
     align-items: center;
     gap: 10px;
+    border-top: 1px solid #2f2f2f;
 }
 .creator-info {
     position: fixed;
@@ -98,13 +102,29 @@ div.stButton > button {
     background-color: #4CAF50;
     color: white;
     border: none;
-    border-radius: 20px;
-    padding: 10px 20px;
+    border-radius: 8px;
+    padding: 12px 24px;
+    height: 41px;
+    margin-top: 0;
 }
 .stTextInput > div > div > input {
-    border-radius: 20px;
-    width: auto;
+    border-radius: 8px;
+    width: 100%;
     min-width: 200px;
+    background-color: #1e1e1e;
+    border: 1px solid #2f2f2f;
+    padding: 12px;
+    color: white;
+}
+div[data-testid="stForm"] {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    margin-bottom: 80px;
+}
+div[data-testid="stVerticalBlock"] {
+    gap: 0 !important;
+    padding: 0 20px;
 }
 </style>
 """,
@@ -185,16 +205,20 @@ with chat_container:
 st.markdown('<div class="creator-info">Created by Atharva Singh</div>',
             unsafe_allow_html=True)
 
+# Add spacing for chat messages
+st.markdown("<div style='margin-bottom: 100px;'></div>", unsafe_allow_html=True)
+
 # Chat input at bottom
 with st.container():
     with st.form(key="chat_form", clear_on_submit=True):
-        col1, col2 = st.columns([9, 1])
-        with col1:
+        cols = st.columns([12, 1])
+        with cols[0]:
             user_input = st.text_input(
-                "What can I help with?",
+                "",
                 key="user_input",
-                placeholder="Ask anything about the Book Fair...")
-        with col2:
+                placeholder="Ask anything about the Book Fair...",
+                label_visibility="collapsed")
+        with cols[1]:
             submit_button = st.form_submit_button("Send")
 
         if submit_button and user_input:
