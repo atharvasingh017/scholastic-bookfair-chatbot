@@ -234,7 +234,7 @@ st.markdown("""
         <img src="https://img.icons8.com/color/48/000000/book.png" class="book-icon">
         SCHOLASTIC FAIR Agent
     </h1>
-    <button class="new-chat-button" onclick="window.location.reload()">
+    <button class="new-chat-button" id="new-chat">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
