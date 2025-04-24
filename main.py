@@ -92,7 +92,25 @@ st.markdown("""
     max-width: 80%;
     word-wrap: break-word;
     color: white;
+    position: relative; /* Added for positioning message actions */
 }
+.message-actions {
+    display: flex;
+    justify-content: flex-end; /* Align actions to the right */
+    margin-top: 5px;
+    position: absolute; /* Position actions absolutely within the message */
+    right: 10px; /* Adjust as needed */
+    bottom: 5px; /* Adjust as needed */
+}
+.action-button {
+    background: none;
+    border: none;
+    color: #888;
+    font-size: 16px;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
 .chat-input {
     position: fixed;
     bottom: 0;
@@ -238,8 +256,17 @@ with chat_container:
             st.markdown(f'<div class="user-message">{content}</div>',
                         unsafe_allow_html=True)
         else:
-            st.markdown(f'<div class="bot-message">{content}</div>',
-                        unsafe_allow_html=True)
+            st.markdown(f'''
+                <div class="bot-message">
+                    {content}
+                    <div class="message-actions">
+                        <button class="action-button" title="Copy">📋</button>
+                        <button class="action-button" title="Regenerate">🔄</button>
+                        <button class="action-button" title="Like">👍</button>
+                        <button class="action-button" title="Dislike">👎</button>
+                    </div>
+                </div>
+            ''', unsafe_allow_html=True)
 
 # Creator info
 st.markdown('<div class="creator-info">Created by Atharva Singh</div>',
