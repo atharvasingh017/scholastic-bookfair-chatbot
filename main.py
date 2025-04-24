@@ -33,49 +33,65 @@ st.markdown("""
     top: 0;
     left: 0;
     right: 0;
-    background-color: #1a1a1a;
+    background-color: #1e1e1e;
     padding: 1rem;
     z-index: 1000;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     border-bottom: 1px solid #2f2f2f;
 }
 .main-header h1 {
     margin: 0;
     font-size: 1.2rem;
     color: white;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 .book-icon {
-    margin-right: 10px;
-    font-size: 1.5rem;
+    width: 24px;
+    height: 24px;
+}
+.new-chat-button {
+    background-color: #4a65ff;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 .user-message {
-    padding: 15px;
-    border-radius: 15px;
-    background-color: #1e1e1e;
-    margin: 10px 0;
+    padding: 12px 16px;
+    border-radius: 12px;
+    background-color: #4a65ff;
+    margin: 8px 0;
     text-align: left;
     margin-left: 20%;
-    display: block;
+    display: inline-block;
     float: right;
     clear: both;
-    border: 1px solid #2f2f2f;
-    max-width: 80%;
+    max-width: fit-content;
     word-wrap: break-word;
+    color: white;
 }
 .bot-message {
-    padding: 15px;
-    border-radius: 15px;
-    background-color: #1a1a1a;
-    margin: 10px 0;
+    padding: 12px 16px;
+    border-radius: 12px;
+    background-color: #2a2a2a;
+    margin: 8px 0;
     text-align: left;
     margin-right: 20%;
-    display: block;
+    display: inline-block;
     float: left;
     clear: both;
-    border: 1px solid #2f2f2f;
     max-width: 80%;
     word-wrap: break-word;
+    color: white;
 }
 .chat-input {
     position: fixed;
@@ -193,11 +209,19 @@ Assistant:
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
-# Display header
+# Display header with new chat button
 st.markdown("""
 <div class="main-header">
-    <span class="book-icon">📚</span>
-    <h1>SCHOLASTIC FAIR Agent</h1>
+    <h1>
+        <img src="https://img.icons8.com/color/48/000000/book.png" class="book-icon">
+        SCHOLASTIC FAIR Agent
+    </h1>
+    <button class="new-chat-button" onclick="window.location.reload()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        New chat
+    </button>
 </div>
 """,
             unsafe_allow_html=True)
